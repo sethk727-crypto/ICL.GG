@@ -1,0 +1,134 @@
+/* ============================================================
+   ICL.GG — browse.css
+   Directory of tournaments, leagues, and teams. One listing
+   card style shared across all three tabs (by design — the
+   roadmap calls for identical styling with per-type slots).
+   ============================================================ */
+
+.browse { padding: 36px 24px 72px; }
+
+.br-head { margin-bottom: 22px; }
+.br-h1 { font-size: clamp(22px, 3vw, 34px); margin-top: 8px; }
+.br-sub { margin-top: 8px; font-size: 14.5px; max-width: 66ch; }
+
+/* ---------- Tabs ---------- */
+
+.br-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 20px;
+}
+.br-tab {
+  padding: 11px 22px;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--text-mid);
+  font-size: 14px;
+  font-weight: 750;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.br-tab:hover { color: var(--text-hi); }
+.br-tab[aria-selected="true"] {
+  color: var(--amber);
+  border-bottom-color: var(--amber);
+}
+
+/* ---------- Layout ---------- */
+
+.br-grid {
+  display: grid;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.br-list { display: grid; gap: 10px; }
+
+/* ---------- Listing card (one style for all three tabs) ---------- */
+
+.listing {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 15px 18px;
+  --cut: 11px;
+  transition: border-color 0.15s, transform 0.15s var(--ease-snap);
+}
+.listing:hover { border-color: var(--line-hi); transform: translateY(-1px); }
+.listing.is-arena { border-color: rgba(255, 77, 94, 0.4); }
+
+.li-badge {
+  grid-row: span 2;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-data);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-hi);
+  background: linear-gradient(135deg, #2a3550, #1a2438);
+  border: 1px solid var(--line-hi);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+.listing.is-arena .li-badge { color: var(--live); border-color: rgba(255, 77, 94, 0.5); }
+
+.li-main { min-width: 0; display: grid; gap: 3px; }
+.li-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.li-title h3 { font-size: 15.5px; font-weight: 750; }
+.li-title .chip { font-size: 9.5px; padding: 2px 8px; }
+.li-meta {
+  font-family: var(--font-data);
+  font-size: 11px;
+  color: var(--text-low);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+}
+.li-meta b { color: var(--text-mid); font-weight: 650; }
+
+.li-side {
+  grid-row: span 2;
+  display: grid;
+  gap: 8px;
+  justify-items: end;
+  text-align: right;
+}
+.li-fill { display: grid; gap: 4px; justify-items: end; min-width: 130px; }
+.li-fill .m-track { width: 130px; height: 5px; background: rgba(159,180,220,.12); border-radius: 3px; overflow: hidden; }
+.li-fill .m-fill { display: block; height: 100%; background: var(--amber); border-radius: 3px; transition: width .5s var(--ease-snap); }
+.listing.is-arena .li-fill .m-fill { background: var(--live); }
+.li-fill .data { font-size: 10.5px; color: var(--text-low); }
+
+.li-sub {
+  grid-column: 2;
+  font-size: 12.5px;
+  color: var(--text-mid);
+}
+
+.br-empty {
+  padding: 30px;
+  text-align: center;
+  color: var(--text-low);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 860px) {
+  .br-grid { grid-template-columns: 1fr; }
+  .filter-rail { position: static; }
+}
+@media (max-width: 620px) {
+  .listing { grid-template-columns: auto 1fr; }
+  .li-side { grid-row: auto; grid-column: 1 / -1; justify-items: start; text-align: left; }
+  .li-fill { justify-items: start; }
+}

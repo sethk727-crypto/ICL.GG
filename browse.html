@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" data-context="fps">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Browse — ICL.GG</title>
+<meta name="description" content="Every open tournament, league, and recruiting team in one directory. Filter to your rank, region, and format — find the perfect fit.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/core.css">
+<link rel="stylesheet" href="assets/css/browse.css">
+</head>
+<body>
+
+<header class="chrome">
+  <div class="chrome-inner">
+    <a class="logo" href="index.html"><span class="logo-mark">ICL</span><span class="logo-word">ICL<span class="tld">.GG</span></span></a>
+    <nav class="chrome-nav" aria-label="Primary">
+      <a href="bracket.html">Bracket</a>
+      <a href="dashboard.html" data-room-link>Combat Room</a>
+      <a href="browse.html" aria-current="page">Browse</a>
+    </nav>
+    <div class="chrome-spacer"></div>
+    <div class="ctx-toggle" role="group" aria-label="Game context">
+      <button data-ctx-btn="fps" aria-pressed="true">Tactical FPS</button>
+      <button data-ctx-btn="chess" aria-pressed="false">Chess</button>
+    </div>
+    <span class="wallet" title="Competitive wallet — escrow secured"><span class="w-ico">◈</span>247.50<span class="w-cur">USD</span></span>
+    <span class="avatar" title="sable · Fair-play 92">SB</span>
+  </div>
+</header>
+
+<main class="browse wrap">
+  <header class="br-head">
+    <div>
+      <p class="eyebrow">Directory · find the perfect fit</p>
+      <h1 class="display br-h1">Every open seat on the platform.</h1>
+      <p class="br-sub">Tournaments, leagues, and recruiting teams share one directory — filter once, join anything. <span class="data muted" id="br-count"></span></p>
+    </div>
+  </header>
+
+  <div class="br-tabs" role="tablist" aria-label="Directory sections">
+    <button class="br-tab" role="tab" data-tab="tournaments" aria-selected="true">Tournaments</button>
+    <button class="br-tab" role="tab" data-tab="leagues" aria-selected="false">Leagues</button>
+    <button class="br-tab" role="tab" data-tab="teams" aria-selected="false">Teams</button>
+  </div>
+
+  <div class="br-grid">
+    <aside class="filter-rail panel" aria-label="Directory filters">
+      <p class="fr-title data">FILTERS</p>
+      <div class="field">
+        <label for="b-q">Search</label>
+        <input class="input" id="b-q" type="search" placeholder="Name, tag, format…" style="padding:10px 13px;font-size:14px">
+      </div>
+      <div class="field">
+        <label for="b-entry">Entry</label>
+        <div class="select-wrap">
+          <select class="input" id="b-entry">
+            <option value="any" selected>Free & staked</option>
+            <option value="free">Free only</option>
+            <option value="paid">Staked only</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <span style="font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--text-low)">STATUS</span>
+        <div class="fr-chips" id="b-status">
+          <button class="fchip" data-st="open" aria-pressed="true">Open</button>
+          <button class="fchip" data-st="live" aria-pressed="true">Live</button>
+          <button class="fchip" data-st="soon" aria-pressed="true">Scheduled</button>
+        </div>
+      </div>
+      <label class="switch"><input type="checkbox" id="b-verified" checked><span class="sw-track"></span>Verified events only</label>
+      <p class="muted data fr-note">Routes: <b>icl.gg/tournaments</b>, <b>/leagues</b>, <b>/teams</b> land here with the tab pre-selected.</p>
+    </aside>
+
+    <div class="br-list" id="br-list"><!-- populated by browse.js --></div>
+  </div>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-grid">
+    <a class="logo" href="index.html"><span class="logo-mark">ICL</span><span class="logo-word">ICL<span class="tld">.GG</span></span></a>
+    <nav class="foot-links" aria-label="Product">
+      <a href="bracket.html">Live bracket</a>
+      <a href="dashboard.html">Matchmaking</a>
+      <a href="onboarding.html">Sign up</a>
+      <a href="docs/PRD.md">UX PRD</a>
+    </nav>
+    <span class="foot-note">Demo build — listings simulated · © ICL.GG</span>
+  </div>
+</footer>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/browse.js"></script>
+</body>
+</html>
