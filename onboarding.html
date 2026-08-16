@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" data-context="fps">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join ICL.GG — 30 Seconds</title>
+<meta name="description" content="Create your ICL.GG account in 30 seconds. Pick your game, see live lobbies instantly, link your rank when you're ready to compete.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/core.css">
+<link rel="stylesheet" href="assets/css/onboarding.css">
+</head>
+<body>
+
+<header class="chrome">
+  <div class="chrome-inner">
+    <a class="logo" href="index.html"><span class="logo-mark">ICL</span><span class="logo-word">ICL<span class="tld">.GG</span></span></a>
+    <div class="chrome-spacer"></div>
+    <span class="data ob-timer" id="ob-timer" title="Time since you started — we promised 30 seconds">⏱ 0:00</span>
+  </div>
+</header>
+
+<main class="ob wrap">
+
+  <!-- Progress rail -->
+  <ol class="ob-rail" id="ob-rail" aria-label="Signup progress">
+    <li class="is-on" data-step="1"><i></i><span>Account</span></li>
+    <li data-step="2"><i></i><span>Your game</span></li>
+    <li data-step="3"><i></i><span>Live lobbies</span></li>
+    <li data-step="4"><i></i><span>Link platforms</span><em class="data">optional now</em></li>
+    <li data-step="5"><i></i><span>Verified</span><em class="data">before staked play</em></li>
+  </ol>
+
+  <!-- STEP 1 · Registration wall: single field / SSO -->
+  <section class="ob-step is-on" id="step-1" aria-label="Step 1: create account">
+    <p class="eyebrow">Step 1 · No password, no email activation wall</p>
+    <h1 class="display ob-h1">Create your account in 30&nbsp;seconds.</h1>
+    <p class="ob-sub">One field. We send a magic link — you can browse every bracket before you even click it.</p>
+    <form class="ob-form" id="email-form" novalidate>
+      <div class="field">
+        <label for="ob-email">Email</label>
+        <input class="input" id="ob-email" type="email" placeholder="you@example.gg" autocomplete="email" required>
+        <p class="ob-err data" id="ob-err" hidden>That doesn't look like an email — check for typos.</p>
+      </div>
+      <button class="btn btn-amber" type="submit">Create account →</button>
+      <div class="ob-or data"><span>or</span></div>
+      <button class="btn btn-ghost" type="button" id="google-btn">
+        <span class="g-mark data">G</span> Continue with Google
+      </button>
+      <p class="btn-note">No credit card. No client download. Delete anytime.</p>
+    </form>
+  </section>
+
+  <!-- STEP 2 · Persona alignment: game context -->
+  <section class="ob-step" id="step-2" hidden aria-label="Step 2: choose your game">
+    <p class="eyebrow">Step 2 · Progressive personalization</p>
+    <h1 class="display ob-h1">What's your main game today?</h1>
+    <p class="ob-sub">The whole platform re-themes around your answer — stats, lobbies, even the bracket engine. You can switch anytime.</p>
+    <div class="game-cards">
+      <button class="game-card cut-both" data-pick="fps">
+        <span class="gc-art gc-fps" aria-hidden="true"></span>
+        <span class="gc-name">Tactical FPS</span>
+        <span class="gc-sub data">CS2 · VALORANT — 5v5 · ACS / K/D / HS%</span>
+      </button>
+      <button class="game-card cut-both" data-pick="chess">
+        <span class="gc-art gc-chess" aria-hidden="true">♞</span>
+        <span class="gc-name">Classic Chess</span>
+        <span class="gc-sub data">CHESS.COM · LICHESS — 1v1 · ELO / ACCURACY</span>
+      </button>
+      <span class="game-card is-soon cut-both" aria-disabled="true">
+        <span class="gc-art" aria-hidden="true">＋</span>
+        <span class="gc-name">LoL · Dota 2 · FGC</span>
+        <span class="gc-sub data">NEXT SEASON — VOTE IN DISCORD</span>
+      </span>
+    </div>
+  </section>
+
+  <!-- STEP 3 · Instant value: auto-generated lobby preview -->
+  <section class="ob-step" id="step-3" hidden aria-label="Step 3: your live lobbies">
+    <p class="eyebrow">Step 3 · Zero setup — it's already running</p>
+    <h1 class="display ob-h1" id="s3-title">Your Combat Room is already live.</h1>
+    <p class="ob-sub" id="s3-sub">These lobbies match your region right now. No profile grinding first — the pool comes to you.</p>
+    <div class="preview-list" id="preview-list"><!-- populated --></div>
+    <div class="ob-actions">
+      <button class="btn btn-amber" id="s3-next">Looks right — keep going →</button>
+    </div>
+  </section>
+
+  <!-- STEP 4 · External platform handshake (deferred barrier) -->
+  <section class="ob-step" id="step-4" hidden aria-label="Step 4: link your platforms">
+    <p class="eyebrow">Step 4 · Optional now — required before staked brackets</p>
+    <h1 class="display ob-h1">Link once. Never screenshot a rank again.</h1>
+    <p class="ob-sub">OAuth pulls server-verified data straight from the source. We never see your passwords.</p>
+    <div class="oauth-list" id="oauth-list">
+      <div class="oauth-row" data-svc="Discord"><span class="o-name">Discord</span><span class="o-why data">Voice + team coordination</span><button class="btn btn-ghost btn-sm o-btn">Connect</button></div>
+      <div class="oauth-row" data-svc="Riot"><span class="o-name">Riot API</span><span class="o-why data">VALORANT rank · Vanguard record</span><button class="btn btn-ghost btn-sm o-btn">Connect</button></div>
+      <div class="oauth-row" data-svc="Steam"><span class="o-name">Steam</span><span class="o-why data">CS2 Premier rating · VAC status</span><button class="btn btn-ghost btn-sm o-btn">Connect</button></div>
+      <div class="oauth-row" data-svc="Chess.com"><span class="o-name">Chess.com</span><span class="o-why data">Rating · fair-play history</span><button class="btn btn-ghost btn-sm o-btn">Connect</button></div>
+    </div>
+    <div class="ob-actions">
+      <button class="btn btn-amber" id="s4-next">Continue →</button>
+      <button class="btn btn-line" id="s4-skip">Do this later</button>
+    </div>
+  </section>
+
+  <!-- STEP 5 · Core qualification: endowed progress → cleared -->
+  <section class="ob-step" id="step-5" hidden aria-label="Step 5: verification">
+    <p class="eyebrow">Step 5 · The first quick win</p>
+    <h1 class="display ob-h1">Qualifying you for verified play…</h1>
+    <p class="ob-sub">Most of this is already done — the sync usually takes about 15 seconds.</p>
+    <div class="verify-list" id="s5-list"></div>
+    <div class="verify-bar"><i id="s5-bar"></i></div>
+    <div class="s5-done" id="s5-done" hidden>
+      <span class="badge-cleared s5-badge">✔ CLEARED — TRUSTED COMPETITOR</span>
+      <p class="ob-sub">You're seeded and smurf-checked. Your fair-play score starts at <b class="data" style="color:var(--ok)">90</b> — keep showing up and it climbs.</p>
+      <div class="ob-actions">
+        <a class="btn btn-amber" href="bracket.html">Enter your first bracket →</a>
+        <a class="btn btn-line" href="dashboard.html">Browse lobbies instead</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-grid">
+    <span class="foot-note">Demo build — no data leaves your browser · © ICL.GG</span>
+    <nav class="foot-links" aria-label="Product"><a href="index.html">← Back to landing</a></nav>
+  </div>
+</footer>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/onboarding.js"></script>
+</body>
+</html>

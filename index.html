@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en" data-context="fps">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ICL.GG — Win Verified Tournaments Daily</title>
+<meta name="description" content="The Unified Competitive Engine. No smurfs, no administrative lag — link your rank and compete in 30 seconds. Live Twitch-in-bracket viewing, verified matchmaking, secure prize pools.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/core.css">
+<link rel="stylesheet" href="assets/css/match.css">
+<link rel="stylesheet" href="assets/css/landing.css">
+</head>
+<body>
+
+<!-- Minimal header: singular conversion focus (PRD §4.1) -->
+<header class="chrome">
+  <div class="chrome-inner">
+    <a class="logo" href="index.html">
+      <span class="logo-mark">ICL</span>
+      <span class="logo-word">ICL<span class="tld">.GG</span></span>
+    </a>
+    <span class="chip uce-chip">UNIFIED COMPETITIVE ENGINE</span>
+    <div class="chrome-spacer"></div>
+    <a class="btn btn-amber btn-sm" href="onboarding.html">Join free</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+
+        <!-- Intent picker — "click one and the landing page changes" -->
+        <div class="intent-row" role="tablist" aria-label="What do you want to do?">
+          <span class="intent-label data">I WANT TO</span>
+          <button class="intent" role="tab" aria-selected="true" data-intent="play">Play</button>
+          <button class="intent" role="tab" aria-selected="false" data-intent="organize">Organize</button>
+          <button class="intent" role="tab" aria-selected="false" data-intent="start-team">Start a team</button>
+          <button class="intent" role="tab" aria-selected="false" data-intent="join-team">Join a team</button>
+        </div>
+
+        <p class="eyebrow" id="hero-eyebrow">Season 4 · Verified brackets live now</p>
+        <h1 class="display hero-h1" id="hero-h1">Dominate the competitive stage. Win verified tournaments daily.</h1>
+        <p class="hero-sub" id="hero-sub">No smurfs. No administrative tournament lag. Link your <b data-game-word>Counter-Strike</b> rank and compete in 30&nbsp;seconds.</p>
+
+        <div class="hero-ctas">
+          <a class="btn btn-amber" id="hero-cta" href="onboarding.html">Enter bracket — free</a>
+          <button class="btn btn-ghost" data-modal-open="demo-veil">▶ Watch 15-sec demo</button>
+        </div>
+        <p class="btn-note">Takes 30 seconds · No credit card required · No client download to browse</p>
+
+        <!-- Game selector — each first game gets its own landing variant -->
+        <div class="game-row" role="tablist" aria-label="Pick your game">
+          <button class="game-chip" role="tab" aria-selected="true" data-game="cs2">Counter-Strike 2</button>
+          <button class="game-chip" role="tab" aria-selected="false" data-game="chess">Chess</button>
+          <button class="game-chip" role="tab" aria-selected="false" data-game="lol">League of Legends</button>
+          <button class="game-chip" role="tab" aria-selected="false" data-game="dota2">Dota 2</button>
+          <button class="game-chip" role="tab" aria-selected="false" data-game="fgc">FGC</button>
+          <span class="chip muted-chip">+ more soon</span>
+        </div>
+      </div>
+
+      <!-- Live bracket-node preview (PRD §4.3 hero visual) -->
+      <div class="hero-demo" id="hero-demo">
+        <div class="demo-frame panel">
+          <div class="demo-head">
+            <span class="eyebrow" style="color:var(--text-mid)">Live bracket · Semifinal</span>
+            <span class="chip chip-live"><span class="dot dot-pulse"></span>2 LIVE</span>
+          </div>
+
+          <div class="demo-nodes">
+            <article class="mnode is-live" id="demo-node-live" tabindex="0"
+                     aria-label="Live match: Vexen versus Krakatoa. Hover or focus to preview the stream.">
+              <header class="mnode-top">
+                <span class="chip chip-live mnode-status"><span class="dot dot-pulse"></span>LIVE · MAP 2</span>
+                <span class="data mnode-fmt">BO3</span>
+              </header>
+              <div class="mnode-row">
+                <span class="seed data">3</span><span class="ttag data">VXN</span>
+                <span class="tname">Vexen</span>
+                <span class="rec data" title="Season record">11–2</span>
+                <span class="tscore data">1</span>
+              </div>
+              <div class="mnode-row">
+                <span class="seed data">7</span><span class="ttag data">KRA</span>
+                <span class="tname">Krakatoa</span>
+                <span class="rec data" title="Season record">9–4</span>
+                <span class="tscore data">0</span>
+              </div>
+              <footer class="mnode-foot data">Hover to watch in place · click to dual-cast</footer>
+            </article>
+
+            <article class="mnode is-final" aria-label="Final result: Nordwind 2, Halcyon 0.">
+              <header class="mnode-top">
+                <span class="chip mnode-status">FINAL</span>
+                <span class="data mnode-fmt">BO3</span>
+              </header>
+              <div class="mnode-row is-w">
+                <span class="seed data">1</span><span class="ttag data">NRD</span>
+                <span class="tname">Nordwind</span>
+                <span class="rec data">13–0</span>
+                <span class="tscore data">2</span>
+              </div>
+              <div class="mnode-row is-l">
+                <span class="seed data">5</span><span class="ttag data">HAL</span>
+                <span class="tname">Halcyon</span>
+                <span class="rec data">8–5</span>
+                <span class="tscore data">0</span>
+              </div>
+              <footer class="mnode-foot data">Advances to Grand Final</footer>
+            </article>
+          </div>
+
+          <!-- Hover-to-preview popover (PRD §2A) -->
+          <div class="stream-pop" id="demo-pop" role="region" aria-label="Live stream preview">
+            <div class="sp-media" id="demo-media"></div>
+            <div class="sp-meta">
+              <div class="sp-row">
+                <span class="chip chip-live"><span class="dot dot-pulse"></span>LIVE</span>
+                <span class="data sp-lat">Stream latency: <b>1.2s</b></span>
+                <button class="chip sp-mute" id="demo-mute" aria-pressed="true">🔇 MUTED — click to unmute</button>
+              </div>
+              <div class="sp-row sp-stats data" id="demo-stats">
+                <span>nova K/D <b>1.84</b></span><span>HS <b>31%</b></span><span>ACS <b>276</b></span>
+              </div>
+              <div class="sp-row sp-handles">
+                <span class="chip chip-info">@vxn_nova</span>
+                <span class="chip chip-info">@krakatoa_tv</span>
+                <span class="muted data">↗ streams open on Twitch</span>
+              </div>
+              <div class="sp-row">
+                <button class="btn btn-ghost btn-xs" id="demo-pip-btn">◱ Pop out (PiP)</button>
+                <a class="btn btn-ghost btn-xs" href="bracket.html#dualcast">⧉ Dual-cast theater</a>
+                <a class="btn btn-line btn-xs" href="bracket.html">Full bracket →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-captions data" aria-hidden="true">
+          <span class="dcap is-on">① Hover any node — the stream fades in beside it</span>
+          <span class="dcap">② Scroll away — it follows you as a floating PiP</span>
+          <span class="dcap">③ Click — split-screen dual-cast of both POVs</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SOCIAL PROOF (PRD §4.4) ================= -->
+  <section class="proof">
+    <div class="wrap proof-grid">
+      <div class="stat-tile"><span class="st-num" data-count="15000">0</span><span class="st-label">Teams active<span class="st-plus">+</span></span></div>
+      <div class="stat-tile"><span class="st-num" data-count="3.2" data-unit="M">0</span><span class="st-label">Matches under anti-cheat compliance</span></div>
+      <div class="stat-tile"><span class="st-num" data-count="45" data-unit="s">0</span><span class="st-label">Median signup → first lobby</span></div>
+      <div class="stat-tile"><span class="st-num" data-count="98.4" data-unit="%">0</span><span class="st-label">Matches started on time</span></div>
+    </div>
+  </section>
+
+  <!-- ================= BENTO FEATURES (PRD §4.5) ================= -->
+  <section class="features" id="features">
+    <div class="wrap">
+      <p class="eyebrow">Why serious competitors switch</p>
+      <h2 class="display sect-h2">Built for the game, not the admin work</h2>
+
+      <div class="bento">
+        <article class="card bento-a cut-tr">
+          <h3>1-Click handshake</h3>
+          <p>Server-verified rank pulled straight from the source. No screenshots, no rank inflation, no manual entry.</p>
+          <div class="link-rows data">
+            <div class="link-row"><span>RIOT API</span><span class="ok">✓ LINKED</span></div>
+            <div class="link-row"><span>STEAM</span><span class="ok">✓ LINKED</span></div>
+            <div class="link-row"><span>CHESS.COM</span><span class="ok">✓ LINKED</span></div>
+            <div class="link-row"><span>DISCORD</span><span class="ok">✓ VOICE SYNCED</span></div>
+          </div>
+        </article>
+
+        <article class="card bento-b cut-tr">
+          <h3>The live-watch advantage</h3>
+          <p>Twitch streams live <em>inside</em> bracket nodes. Hover to scout an opponent, pop out a PiP while you browse, or dual-cast both POVs side by side with a live stats overlay.</p>
+          <div class="dualmock" aria-hidden="true">
+            <div class="dm-player"><div class="dm-canvas" id="bento-sim-a"></div><span class="dm-tag data">VXN nova · POV</span></div>
+            <div class="dm-player"><div class="dm-canvas" id="bento-sim-b"></div><span class="dm-tag data">KRA onyx · POV</span></div>
+          </div>
+          <div class="dm-meters">
+            <div class="meter"><div class="m-head"><span>K/D — nova</span><b>1.84</b></div><div class="m-track"><div class="m-fill" style="width:76%"></div></div></div>
+            <div class="meter"><div class="m-head"><span>K/D — onyx</span><b>1.31</b></div><div class="m-track"><div class="m-fill" style="width:54%"></div></div></div>
+          </div>
+          <a href="bracket.html" class="bento-link data">Open the live bracket →</a>
+        </article>
+
+        <article class="card bento-c cut-tr">
+          <h3>Fair play, verified</h3>
+          <p>Anti-cheat handshake on entry plus a reliability score that rewards showing up and finishing what you start.</p>
+          <div class="fp-visual">
+            <span class="badge-cleared">✔ CLEARED · VANGUARD + VAC</span>
+            <div class="fp-score data">
+              <span class="fp-big">92</span>
+              <span class="fp-desc">FAIR-PLAY SCORE<br><span class="muted">+ show up on time · + finish series<br>− no-shows · − abandons</span></span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card bento-d cut-tr">
+          <h3>Every format. One engine.</h3>
+          <p>Tournaments and leagues share one core — switch formats mid-season without rebuilding a thing.</p>
+          <div class="fmt-rows data">
+            <div class="fmt-row"><span class="chip chip-amber">OPEN CUP</span><span>Starts 8:00 PM sharp — 4/8 teams joined</span></div>
+            <div class="fmt-row"><span class="chip chip-info">WAITING</span><span>Fires the moment 8 teams lock in</span></div>
+            <div class="fmt-row"><span class="chip chip-live">ARENA</span><span>500 join · random 4-player teams · no cap</span></div>
+            <div class="fmt-row"><span class="chip">LEAGUE ⇄ CUP</span><span>Regular season rolls into a bracket</span></div>
+          </div>
+          <a href="browse.html" class="bento-link data">Browse open events →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TESTIMONIAL (PRD §4.6) ================= -->
+  <section class="testimonial">
+    <div class="wrap">
+      <figure class="quote panel cut-both">
+        <blockquote>
+          “We reduced team tournament registration and lobby matchmaking from
+          <b>2 hours of manual Discord checks</b> to <b>45 seconds</b> of automatic lobby entry.”
+        </blockquote>
+        <figcaption class="data">— Clan captain · Tier-1 Counter-Strike league</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= FAQ (PRD §4.7) ================= -->
+  <section class="faq" id="faq">
+    <div class="wrap faq-grid">
+      <div>
+        <p class="eyebrow">Objections, handled</p>
+        <h2 class="display sect-h2">Straight answers</h2>
+        <p class="muted">Everything else lives in the <a href="docs/PRD.md">UX PRD</a>.</p>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>How do you detect smurfs?</summary>
+          <p>Ranks are pulled server-side from Riot, Steam, and Chess.com via OAuth — never self-reported. Fresh accounts with veteran performance curves get flagged, and every player carries a verified match history badge into the lobby.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What anti-cheat systems do you integrate with?</summary>
+          <p>We run a background handshake against Riot Vanguard and Valve Anti-Cheat records at check-in and issue a green “Cleared” trust badge before you can enter a verified bracket.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Are prize pools and wallets secure?</summary>
+          <p>Entry fees sit in Stripe-backed escrow until results are confirmed, then pay out automatically. KYC applies to staked brackets only — free events never ask for payment details.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What is the fair-play score?</summary>
+          <p>A reliability rating that rises when you show up on time and finish your series, and falls on no-shows and abandons. Low scores restrict entry to staked events; consistent teams get priority seeding.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Does it work on my phone?</summary>
+          <p>Yes — brackets, lobbies, and stream viewing are fully responsive. Dual-cast theater stacks vertically on small screens, and PiP docks to the bottom of the viewport.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can a league turn into a tournament?</summary>
+          <p>Yes. Events are format-agnostic: run a round-robin regular season, then roll the standings straight into a single- or double-elimination playoff bracket — same event, same rosters, same wallet.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CLOSING CTA (PRD §4.8) ================= -->
+  <section class="closer">
+    <div class="wrap closer-inner">
+      <h2 class="display closer-h2">Ready to prove your rank?<br>Enter the arena today.</h2>
+      <a class="btn btn-amber" href="onboarding.html">Join free — 30 seconds</a>
+      <p class="btn-note">Free forever for open events · Staked brackets optional</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-grid">
+    <a class="logo" href="index.html"><span class="logo-mark">ICL</span><span class="logo-word">ICL<span class="tld">.GG</span></span></a>
+    <nav class="foot-links" aria-label="Product">
+      <a href="bracket.html">Live bracket</a>
+      <a href="dashboard.html">Matchmaking</a>
+      <a href="browse.html?tab=tournaments">Tournaments</a>
+      <a href="browse.html?tab=leagues">Leagues</a>
+      <a href="browse.html?tab=teams">Teams</a>
+      <a href="onboarding.html">Sign up</a>
+      <a href="docs/PRD.md">UX PRD</a>
+      <a href="docs/ROADMAP.md">Roadmap</a>
+    </nav>
+    <span class="foot-note">Demo build — streams simulated · © ICL.GG</span>
+  </div>
+</footer>
+
+<!-- 15-second demo modal (PRD §4.2 secondary CTA) -->
+<div class="modal-veil" id="demo-veil" aria-hidden="true">
+  <div class="modal modal-wide" role="dialog" aria-modal="true" aria-label="15 second product demo">
+    <div class="modal-head">
+      <div>
+        <p class="eyebrow">15-second tour</p>
+        <h3>The live-watch bracket</h3>
+      </div>
+      <button class="modal-x" data-modal-close aria-label="Close demo">✕</button>
+    </div>
+    <div class="tour-stage" id="tour-stage">
+      <div class="tour-node mnode is-live">
+        <header class="mnode-top"><span class="chip chip-live"><span class="dot dot-pulse"></span>LIVE</span><span class="data mnode-fmt">BO3</span></header>
+        <div class="mnode-row"><span class="ttag data">VXN</span><span class="tname">Vexen</span><span class="tscore data">1</span></div>
+        <div class="mnode-row"><span class="ttag data">KRA</span><span class="tname">Krakatoa</span><span class="tscore data">0</span></div>
+      </div>
+      <div class="tour-pop"><div class="tour-media" id="tour-media-a"></div><span class="data tour-tag">HOVER PREVIEW · 1.2s LATENCY</span></div>
+      <div class="tour-pip"><div class="tour-media" id="tour-media-b"></div><span class="data tour-tag">PIP — FOLLOWS YOUR SCROLL</span></div>
+      <div class="tour-theater">
+        <div class="tour-half"><div class="tour-media" id="tour-media-c"></div><span class="data tour-tag">VXN POV</span></div>
+        <div class="tour-half"><div class="tour-media" id="tour-media-d"></div><span class="data tour-tag">KRA POV</span></div>
+      </div>
+    </div>
+    <div class="tour-foot">
+      <p class="data tour-caption" id="tour-caption">Hover any live node — the stream fades in beside it.</p>
+      <div class="tour-bar"><i id="tour-bar"></i></div>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
+        <button class="btn btn-ghost btn-sm" id="tour-replay">↻ Replay</button>
+        <a class="btn btn-amber btn-sm" href="onboarding.html">Enter bracket — free</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating PiP (PRD §2B) -->
+<aside class="pip" id="pip" aria-label="Floating stream player" hidden>
+  <header class="pip-head" id="pip-drag">
+    <span class="chip chip-live"><span class="dot dot-pulse"></span>LIVE</span>
+    <span class="data pip-title">VXN vs KRA · Map 2</span>
+    <span class="pip-btns">
+      <button class="pip-b" id="pip-min" title="Minimize to status bar" aria-label="Minimize">▁</button>
+      <button class="pip-b" id="pip-close" title="Close" aria-label="Close">✕</button>
+    </span>
+  </header>
+  <div class="pip-media" id="pip-media"></div>
+  <div class="pip-bar data" id="pip-bar" hidden>
+    <span class="dot dot-pulse" style="color:var(--live)"></span>
+    <span>VXN 1 — 0 KRA · RD 7</span>
+    <button class="pip-b" id="pip-restore" aria-label="Restore player">◳</button>
+  </div>
+</aside>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/streamsim.js"></script>
+<script src="assets/js/landing.js"></script>
+</body>
+</html>

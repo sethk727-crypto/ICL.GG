@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" data-context="fps">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Bracket — ICL.GG</title>
+<meta name="description" content="Tournament bracket with live Twitch streams inside every node: hover to preview, PiP to follow, dual-cast theater to scout both POVs.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/core.css">
+<link rel="stylesheet" href="assets/css/match.css">
+<link rel="stylesheet" href="assets/css/bracket.css">
+</head>
+<body>
+
+<header class="chrome">
+  <div class="chrome-inner">
+    <a class="logo" href="index.html"><span class="logo-mark">ICL</span><span class="logo-word">ICL<span class="tld">.GG</span></span></a>
+    <nav class="chrome-nav" aria-label="Primary">
+      <a href="bracket.html" aria-current="page">Bracket</a>
+      <a href="dashboard.html" data-room-link>Combat Room</a>
+      <a href="browse.html">Browse</a>
+    </nav>
+    <div class="chrome-spacer"></div>
+    <div class="ctx-toggle" role="group" aria-label="Game context">
+      <button data-ctx-btn="fps" aria-pressed="true">Tactical FPS</button>
+      <button data-ctx-btn="chess" aria-pressed="false">Chess</button>
+    </div>
+    <span class="wallet" title="Competitive wallet — escrow secured"><span class="w-ico">◈</span>247.50<span class="w-cur">USD</span></span>
+    <span class="avatar" title="sable · Fair-play 92">SB</span>
+  </div>
+</header>
+
+<main class="bracket-page">
+
+  <!-- Tournament header -->
+  <section class="tourn-head">
+    <div class="wrap th-grid">
+      <div class="th-copy">
+        <p class="eyebrow" id="t-eyebrow">ICL Invitational · Season 4 · Playoffs</p>
+        <h1 class="display th-h1" id="t-title">Tactical Division Championship</h1>
+        <div class="th-chips">
+          <span class="chip chip-amber">◈ <strong id="t-prize">$12,500</strong>&nbsp;PRIZE POOL · ESCROWED</span>
+          <span class="chip"><strong id="t-teams">16</strong>&nbsp;<span id="t-teams-label">TEAMS</span></span>
+          <span class="chip chip-live"><span class="dot dot-pulse"></span><strong id="t-live">2</strong>&nbsp;LIVE NOW</span>
+          <span class="chip chip-ok">✔ ANTI-CHEAT VERIFIED FIELD</span>
+        </div>
+      </div>
+      <div class="th-actions">
+        <button class="btn btn-amber btn-sm" id="register-btn">Register — check in</button>
+        <button class="btn btn-ghost btn-sm" id="bg-btn" aria-haspopup="true" aria-expanded="false">◧ Backdrop</button>
+      </div>
+    </div>
+
+    <!-- Now Streaming strip -->
+    <div class="wrap">
+      <div class="streaming-strip" id="streaming-strip" aria-label="Now streaming">
+        <span class="ss-label data">NOW STREAMING</span>
+        <!-- populated by bracket.js -->
+      </div>
+    </div>
+
+    <!-- Backdrop customizer -->
+    <div class="bg-pop panel" id="bg-pop" hidden>
+      <p class="eyebrow">Bracket backdrop</p>
+      <div class="bg-schemes" role="group" aria-label="Color scheme">
+        <button class="bg-sw" data-scheme="arena" aria-pressed="true"><i style="background:linear-gradient(135deg,#0c1220,#151f33)"></i>Arena</button>
+        <button class="bg-sw" data-scheme="midnight" aria-pressed="false"><i style="background:linear-gradient(135deg,#05070d,#0b1626)"></i>Midnight</button>
+        <button class="bg-sw" data-scheme="ember" aria-pressed="false"><i style="background:linear-gradient(135deg,#150d0b,#33201a)"></i>Ember</button>
+        <button class="bg-sw" data-scheme="steel" aria-pressed="false"><i style="background:linear-gradient(135deg,#10141a,#232b36)"></i>Steel</button>
+      </div>
+      <label class="field" style="margin-top:12px">
+        <span style="font-size:11px;letter-spacing:.1em;color:var(--text-low)">CUSTOM IMAGE URL</span>
+        <input class="input" id="bg-url" type="url" placeholder="https://…/team-wallpaper.jpg" style="padding:9px 12px;font-size:13px">
+      </label>
+      <p class="muted data" style="font-size:10.5px;margin-top:8px">Custom backdrops apply to your view only — event color schemes are ignored while one is set.</p>
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn btn-ghost btn-xs" id="bg-apply">Apply image</button>
+        <button class="btn btn-line btn-xs" id="bg-clear">Reset</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bracket stage -->
+  <section class="bracket-stage" id="bracket-stage" data-scheme="arena">
+    <div class="bracket-scroll" id="bracket-scroll" tabindex="0" aria-label="Tournament bracket — scrolls horizontally">
+      <div class="bracket-inner" id="bracket-inner">
+        <svg class="bracket-links" id="bracket-links" aria-hidden="true"></svg>
+        <!-- round columns populated by bracket.js -->
+      </div>
+    </div>
+
+    <!-- Shared hover preview (PRD §2A) -->
+    <div class="stream-pop" id="mpop" role="region" aria-label="Live stream preview">
+      <div class="sp-media" id="mpop-media"></div>
+      <div class="sp-meta">
+        <div class="sp-row">
+          <span class="chip chip-live"><span class="dot dot-pulse"></span>LIVE</span>
+          <span class="data sp-lat" id="mpop-lat">Stream latency: <b>1.2s</b></span>
+          <button class="chip sp-mute" id="mpop-mute" aria-pressed="true">🔇 MUTED</button>
+        </div>
+        <div class="sp-row sp-server" id="mpop-server" hidden></div>
+        <div class="sp-row sp-stats data" id="mpop-stats"></div>
+        <div class="sp-row sp-handles" id="mpop-handles"></div>
+        <div class="sp-row">
+          <button class="btn btn-ghost btn-xs" id="mpop-pip">◱ Pop out (PiP)</button>
+          <button class="btn btn-ghost btn-xs" id="mpop-dual">⧉ Watch match dual-cast</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Split-screen theater (PRD §2C) -->
+  <section class="theater" id="theater" hidden aria-label="Dual-cast theater">
+    <div class="thr-rail panel">
+      <div class="thr-rail-head">
+        <p class="eyebrow">Bracket — condensed</p>
+        <button class="modal-x" id="thr-close" aria-label="Close theater">✕</button>
+      </div>
+      <div class="thr-list" id="thr-list"><!-- mini match rows --></div>
+    </div>
+    <div class="thr-main">
+      <div class="thr-head">
+        <h2 class="display" id="thr-title">Semifinal · Vexen vs Krakatoa</h2>
+        <div class="thr-sub data">
+          <span class="chip chip-live"><span class="dot dot-pulse"></span>LIVE</span>
+          <span id="thr-server" class="sp-server"></span>
+        </div>
+      </div>
+      <div class="thr-casts">
+        <figure class="thr-cast">
+          <div class="thr-media" id="thr-media-a"></div>
+          <figcaption class="data" id="thr-cap-a">VXN nova · POV</figcaption>
+          <div class="meter"><div class="m-head"><span id="thr-m1-label">K/D ratio</span><b id="thr-m1-val">1.84</b></div><div class="m-track"><div class="m-fill" id="thr-m1-fill" style="width:76%"></div></div></div>
+        </figure>
+        <figure class="thr-cast">
+          <div class="thr-media" id="thr-media-b"></div>
+          <figcaption class="data" id="thr-cap-b">KRA onyx · POV</figcaption>
+          <div class="meter"><div class="m-head"><span id="thr-m2-label">Accuracy</span><b id="thr-m2-val">64%</b></div><div class="m-track"><div class="m-fill" id="thr-m2-fill" style="width:64%"></div></div></div>
+        </figure>
+      </div>
+      <div class="thr-chat panel">
+        <div class="thr-chat-head data">ROOM CHAT · <span id="chat-room">#semifinal-1</span> <span class="muted">— Discord synced</span></div>
+        <div class="thr-chat-log" id="chat-log" aria-live="polite"></div>
+        <form class="thr-chat-form" id="chat-form">
+          <input class="input" id="chat-input" placeholder="Message the room… (Enter to send)" autocomplete="off" maxlength="240">
+          <button class="btn btn-ghost btn-sm" type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Floating PiP (PRD §2B) -->
+<aside class="pip" id="pip" aria-label="Floating stream player" hidden>
+  <header class="pip-head" id="pip-drag">
+    <span class="chip chip-live"><span class="dot dot-pulse"></span>LIVE</span>
+    <span class="data pip-title" id="pip-title">—</span>
+    <span class="pip-btns">
+      <button class="pip-b" id="pip-min" title="Minimize to status bar" aria-label="Minimize">▁</button>
+      <button class="pip-b" id="pip-close" title="Close" aria-label="Close">✕</button>
+    </span>
+  </header>
+  <div class="pip-media" id="pip-media"></div>
+  <div class="pip-bar data" id="pip-bar" hidden>
+    <span class="dot dot-pulse" style="color:var(--live)"></span>
+    <span id="pip-bar-text">—</span>
+    <button class="pip-b" id="pip-restore" aria-label="Restore player">◳</button>
+  </div>
+</aside>
+
+<!-- Demo edge-case controls -->
+<div class="demo-dock" id="demo-dock">
+  <button class="demo-dock-btn data" id="demo-dock-btn" aria-expanded="false">▲ DEMO — edge cases</button>
+  <div class="demo-dock-pop panel" id="demo-dock-pop" hidden>
+    <p class="eyebrow">PRD edge-case simulator</p>
+    <button class="btn btn-line btn-xs" id="ec-drop">B · Drop a live stream → scoreboard fallback</button>
+    <button class="btn btn-line btn-xs" id="ec-restore">B · Restore the stream</button>
+    <button class="btn btn-line btn-xs" id="ec-low">D · Toggle low-power mode</button>
+    <button class="btn btn-line btn-xs" id="ec-shuffle">Randomize entrants (upcoming only)</button>
+  </div>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/streamsim.js"></script>
+<script src="assets/js/bracket.js"></script>
+</body>
+</html>

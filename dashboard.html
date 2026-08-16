@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" data-context="fps">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Matchmaking — ICL.GG</title>
+<meta name="description" content="Verified LFG matchmaking. Combat Room for tactical FPS squads, Challenger Hall for 1v1 chess — filtered to serious, anti-cheat-cleared competitors.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/core.css">
+<link rel="stylesheet" href="assets/css/dashboard.css">
+</head>
+<body>
+
+<header class="chrome">
+  <div class="chrome-inner">
+    <a class="logo" href="index.html"><span class="logo-mark">ICL</span><span class="logo-word">ICL<span class="tld">.GG</span></span></a>
+    <nav class="chrome-nav" aria-label="Primary">
+      <a href="bracket.html">Bracket</a>
+      <a href="dashboard.html" aria-current="page" data-room-link>Combat Room</a>
+      <a href="browse.html">Browse</a>
+    </nav>
+    <div class="chrome-spacer"></div>
+    <div class="ctx-toggle" role="group" aria-label="Game context">
+      <button data-ctx-btn="fps" aria-pressed="true">Tactical FPS</button>
+      <button data-ctx-btn="chess" aria-pressed="false">Chess</button>
+    </div>
+    <span class="wallet" title="Competitive wallet — escrow secured"><span class="w-ico">◈</span>247.50<span class="w-cur">USD</span></span>
+    <span class="avatar" title="sable · Fair-play 92">SB</span>
+  </div>
+</header>
+
+<main class="dash wrap">
+
+  <!-- ============ FPS · COMBAT ROOM ============ -->
+  <section class="room" id="room-fps">
+    <header class="room-head">
+      <div>
+        <p class="eyebrow">Combat Room · live LFG</p>
+        <h1 class="display room-h1">Find your five. Skip the tryout spreadsheet.</h1>
+        <p class="room-sub">Lobbies are filtered to verified, anti-cheat-cleared competitors by default. <span class="data muted" id="fps-count"></span></p>
+      </div>
+      <button class="btn btn-amber btn-sm" id="create-lobby">＋ Create lobby</button>
+    </header>
+
+    <div class="room-grid">
+      <!-- Serious-competitor filter rail (PRD §3.3) -->
+      <aside class="filter-rail panel" aria-label="Lobby filters">
+        <p class="fr-title data">FILTERS — SERIOUS BY DEFAULT</p>
+        <div class="field">
+          <label for="f-rank">Rank floor</label>
+          <div class="select-wrap">
+            <select class="input" id="f-rank">
+              <option value="3" selected>Immortal +</option>
+              <option value="2">Diamond +</option>
+              <option value="1">Platinum +</option>
+              <option value="0">Any rank</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <span style="font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--text-low)">REGION</span>
+          <div class="fr-chips" id="f-region">
+            <button class="fchip" data-region="NA" aria-pressed="true">NA</button>
+            <button class="fchip" data-region="EU" aria-pressed="true">EU</button>
+            <button class="fchip" data-region="APAC" aria-pressed="false">APAC</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-mode">Mode</label>
+          <div class="select-wrap">
+            <select class="input" id="f-mode">
+              <option value="any" selected>Any mode</option>
+              <option value="comp">5v5 Competitive</option>
+              <option value="scrim">Team scrim</option>
+              <option value="wager">Wager match</option>
+            </select>
+          </div>
+        </div>
+        <label class="switch"><input type="checkbox" id="f-verified" checked><span class="sw-track"></span>Verified anti-cheat only</label>
+        <label class="switch"><input type="checkbox" id="f-fair" checked><span class="sw-track"></span>Fair-play score 85+</label>
+        <label class="switch"><input type="checkbox" id="f-winrate"><span class="sw-track"></span>Win rate 55%+</label>
+        <p class="muted data fr-note">Casual filters live under “Any rank” — the pro pool is the default, not the exception.</p>
+      </aside>
+
+      <!-- Lobby cards -->
+      <div class="lobby-col">
+        <div class="lobby-grid" id="lobby-grid"><!-- populated by dashboard.js --></div>
+      </div>
+
+      <!-- Stats & squad rail -->
+      <aside class="stats-rail" aria-label="Your record and squad">
+        <div class="card cut-tr">
+          <p class="fr-title data">YOUR COMBAT RECORD</p>
+          <div class="sr-stats">
+            <div class="stat-tile"><span class="st-num">276</span><span class="st-label">Avg combat score</span></div>
+            <div class="stat-tile"><span class="st-num">1.31</span><span class="st-label">K/D ratio</span></div>
+            <div class="stat-tile"><span class="st-num">28<span class="unit">%</span></span><span class="st-label">Headshot</span></div>
+          </div>
+          <div class="sr-row">
+            <span class="data muted">LAST 5</span>
+            <span class="pips"><span class="pip pip-w">W</span><span class="pip pip-w">W</span><span class="pip pip-l">L</span><span class="pip pip-w">W</span><span class="pip pip-w">W</span></span>
+            <span class="fairplay" title="Fair-play reliability score">FP <span class="fp-val">92</span></span>
+          </div>
+        </div>
+
+        <div class="card cut-tr">
+          <p class="fr-title data">ACTIVE ROSTER · SBL SABLEGUARD <span style="color:var(--text-low)">9–4</span></p>
+          <ul class="roster" id="roster">
+            <li><span class="r-name">sable <b class="data">[C]</b></span><span class="data r-meta">IMM 2 · FP 92</span></li>
+            <li><span class="r-name">drift</span><span class="data r-meta">IMM 1 · FP 88</span></li>
+            <li><span class="r-name">hexley</span><span class="data r-meta">IMM 3 · FP 95</span></li>
+            <li><span class="r-name">kite</span><span class="data r-meta">ASC 3 · FP 90</span></li>
+            <li class="r-open"><span class="r-name">＋ Open slot</span><span class="data r-meta">Immortal+ · trials on</span></li>
+          </ul>
+        </div>
+
+        <!-- Majority-rules reshuffle vote (roadmap #8) -->
+        <div class="card cut-tr" id="vote-card">
+          <p class="fr-title data">SQUAD VOTE · RESHUFFLE TEAMS</p>
+          <p class="vote-sub">Applies after the current series ends. Majority of 7 rules.</p>
+          <div class="meter">
+            <div class="m-head"><span>Votes for reshuffle</span><b id="vote-count">3 / 7</b></div>
+            <div class="m-track"><div class="m-fill" id="vote-fill" style="width:43%"></div></div>
+          </div>
+          <div class="vote-btns">
+            <button class="btn btn-ghost btn-xs" id="vote-yes">Vote yes</button>
+            <button class="btn btn-line btn-xs" id="vote-no">Keep teams</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ CHESS · CHALLENGER HALL ============ -->
+  <section class="room" id="room-chess" hidden>
+    <header class="room-head">
+      <div>
+        <p class="eyebrow">Challenger Hall · 1v1 queue</p>
+        <h1 class="display room-h1">Direct challenges. Verified ratings only.</h1>
+        <p class="room-sub">Every rating is pulled from Chess.com or Lichess by OAuth — no self-reported ELO. <span class="data muted" id="chess-count"></span></p>
+      </div>
+      <button class="btn btn-amber btn-sm" id="post-challenge">＋ Post challenge</button>
+    </header>
+
+    <div class="room-grid">
+      <aside class="filter-rail panel" aria-label="Challenge filters">
+        <p class="fr-title data">FILTERS — SERIOUS BY DEFAULT</p>
+        <div class="field">
+          <label for="f-elo">Rating floor</label>
+          <div class="select-wrap">
+            <select class="input" id="f-elo">
+              <option value="2000" selected>2000 +</option>
+              <option value="1800">1800 +</option>
+              <option value="1500">1500 +</option>
+              <option value="0">Any rating</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <span style="font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--text-low)">TIME CONTROL</span>
+          <div class="fr-chips" id="f-tc">
+            <button class="fchip" data-tc="bullet" aria-pressed="false">Bullet</button>
+            <button class="fchip" data-tc="blitz" aria-pressed="true">Blitz</button>
+            <button class="fchip" data-tc="rapid" aria-pressed="true">Rapid</button>
+            <button class="fchip" data-tc="classical" aria-pressed="false">Classical</button>
+          </div>
+        </div>
+        <label class="switch"><input type="checkbox" id="f-rated" checked><span class="sw-track"></span>Rated challenges only</label>
+        <label class="switch"><input type="checkbox" id="f-fair2" checked><span class="sw-track"></span>Fair-play score 85+</label>
+        <p class="muted data fr-note">Anti-cheat: server-side accuracy screening runs on every rated game.</p>
+      </aside>
+
+      <div class="lobby-col">
+        <div class="challenge-list" id="challenge-list"><!-- populated by dashboard.js --></div>
+
+        <div class="events-row">
+          <div class="card event-card cut-tr">
+            <div class="ev-head"><span class="chip chip-amber">SWISS · 9R</span><span class="data muted">Sun 6:00 PM</span></div>
+            <h3>Sunday Swiss Open</h3>
+            <p class="data ev-meta">128 cap · 82 entered · 15+10 · $500 pool</p>
+            <button class="btn btn-ghost btn-xs ev-join">Enter — free</button>
+          </div>
+          <div class="card event-card cut-tr">
+            <div class="ev-head"><span class="chip chip-info">ROUND-ROBIN</span><span class="data muted">Starts at 8 players</span></div>
+            <h3>Masters Round-Robin</h3>
+            <p class="data ev-meta">2100+ · 6/8 joined · 90+30 classical</p>
+            <button class="btn btn-ghost btn-xs ev-join">Claim seat</button>
+          </div>
+          <div class="card event-card cut-tr">
+            <div class="ev-head"><span class="chip chip-live"><span class="dot dot-pulse"></span>ARENA</span><span class="data muted">Tonight 8:00 PM</span></div>
+            <h3>Blitz Arena — no cap</h3>
+            <p class="data ev-meta">Join anytime · random pairings · 3+2</p>
+            <button class="btn btn-ghost btn-xs ev-join">Join arena</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="stats-rail" aria-label="Your chess record">
+        <div class="card cut-tr">
+          <p class="fr-title data">YOUR CHESS METRICS</p>
+          <div class="sr-stats">
+            <div class="stat-tile"><span class="st-num">2143</span><span class="st-label">Rating <span style="color:var(--ok)">▲ 12</span></span></div>
+            <div class="stat-tile"><span class="st-num">94.2<span class="unit">%</span></span><span class="st-label">Avg accuracy</span></div>
+            <div class="stat-tile"><span class="st-num">7</span><span class="st-label">Brilliant moves · season</span></div>
+          </div>
+          <div class="sr-row">
+            <span class="data muted">LAST 5</span>
+            <span class="pips"><span class="pip pip-w">W</span><span class="pip pip-l">L</span><span class="pip pip-w">W</span><span class="pip pip-w">W</span><span class="pip pip-w">W</span></span>
+            <span class="fairplay">FP <span class="fp-val">92</span></span>
+          </div>
+        </div>
+
+        <div class="card cut-tr">
+          <p class="fr-title data">DAILY POSITION · WHITE TO MOVE</p>
+          <div class="mini-board" id="mini-board" aria-label="Chess position, white to move"></div>
+          <p class="muted data" style="font-size:11px;margin-top:10px">Find the winning idea — first correct line earns 5 arena tickets.</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-grid">
+    <a class="logo" href="index.html"><span class="logo-mark">ICL</span><span class="logo-word">ICL<span class="tld">.GG</span></span></a>
+    <nav class="foot-links" aria-label="Product">
+      <a href="bracket.html">Live bracket</a>
+      <a href="browse.html">Browse events</a>
+      <a href="onboarding.html">Sign up</a>
+      <a href="docs/PRD.md">UX PRD</a>
+    </nav>
+    <span class="foot-note">Demo build — lobbies simulated · © ICL.GG</span>
+  </div>
+</footer>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/core.js"></script>
+<script src="assets/js/dashboard.js"></script>
+</body>
+</html>
