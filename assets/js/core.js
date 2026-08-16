@@ -19,16 +19,22 @@
     chess: { label: "Classic Chess", room: "Challenger Hall", metric: "ELO" },
   };
 
+  /* storage can throw in private/embedded contexts — degrade quietly */
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch { /* session-only */ } },
+  };
+
   function getContext() {
     const fromQuery = new URLSearchParams(location.search).get("ctx");
     if (fromQuery && CTX_META[fromQuery]) return fromQuery;
-    const stored = localStorage.getItem(CTX_KEY);
+    const stored = store.get(CTX_KEY);
     return CTX_META[stored] ? stored : "fps";
   }
 
   function setContext(ctx, opts) {
     if (!CTX_META[ctx]) return;
-    localStorage.setItem(CTX_KEY, ctx);
+    store.set(CTX_KEY, ctx);
     document.documentElement.setAttribute("data-context", ctx);
     $$("[data-ctx-btn]").forEach((b) => {
       b.setAttribute("aria-pressed", String(b.dataset.ctxBtn === ctx));
@@ -268,7 +274,7 @@
   }
 
   window.ICL = {
-    $, $$, reducedMotion,
+    $, $$, reducedMotion, store,
     getContext, setContext, CTX_META,
     modalOpen, modalClose, toast, verifyFlow,
     perf,

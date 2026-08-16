@@ -128,7 +128,7 @@
     b.addEventListener("click", () => {
       tab = b.dataset.tab;
       $$(".br-tab").forEach((x) => x.setAttribute("aria-selected", String(x === b)));
-      history.replaceState(null, "", "?tab=" + tab);
+      try { history.replaceState(null, "", "?tab=" + tab); } catch { /* sandboxed */ }
       render();
     }));
   $$(".br-tab").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === tab)));

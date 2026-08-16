@@ -73,7 +73,7 @@
     setContext(GAMES[game].ctx);
     applyGameWord();
     swapDemoFlavor();
-    history.replaceState(null, "", game === "cs2" ? location.pathname : "?game=" + game);
+    try { history.replaceState(null, "", game === "cs2" ? location.pathname : "?game=" + game); } catch { /* sandboxed */ }
   }
 
   $$(".intent").forEach((b) => b.addEventListener("click", () => applyIntent(b.dataset.intent)));

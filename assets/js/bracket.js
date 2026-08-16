@@ -625,7 +625,7 @@
       stage.style.backgroundImage = "";
       stage.classList.remove("has-image");
     }
-    localStorage.setItem(BG_KEY, JSON.stringify(cfg));
+    ICL.store.set(BG_KEY, JSON.stringify(cfg));
   }
   $$(".bg-sw").forEach((b) => b.addEventListener("click", () => applyBg({ scheme: b.dataset.scheme })));
   $("#bg-apply").addEventListener("click", () => {
@@ -633,7 +633,7 @@
     if (url) applyBg({ scheme: stage.dataset.scheme, url });
   });
   $("#bg-clear").addEventListener("click", () => { $("#bg-url").value = ""; applyBg({ scheme: "arena" }); });
-  try { applyBg(JSON.parse(localStorage.getItem(BG_KEY)) || { scheme: "arena" }); } catch { applyBg({ scheme: "arena" }); }
+  try { applyBg(JSON.parse(ICL.store.get(BG_KEY)) || { scheme: "arena" }); } catch { applyBg({ scheme: "arena" }); }
 
   /* ================= Context switching (IA §5) ================= */
 
