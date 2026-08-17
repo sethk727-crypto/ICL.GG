@@ -76,6 +76,24 @@ slot into the same config as a fallback.
 | §6C endowed-progress loader (2 steps pre-checked) | `ICL.verifyFlow()` |
 | §6D lazy loading + telemetry low-power guard | `streamsim.js` IntersectionObserver gating, `ICL.perf` frame sampler |
 
+## Demo video
+
+A 2-minute MP4 tour of the whole build (landing variants → hover-stream → PiP →
+dual-cast theater → edge cases → verified matchmaking → directory) lives at
+[`docs/demo/icl-gg-demo.mp4`](docs/demo/icl-gg-demo.mp4) — ready to send out.
+
+To re-record after changes: serve the site (`python3 -m http.server 8901`), then
+
+```bash
+npm i playwright && node tools/record-demo.js     # writes tools/video/raw.webm
+# convert with any ffmpeg:
+ffmpeg -ss 0.5 -i tools/video/raw.webm -c:v libx264 -preset slow -crf 20 \
+  -pix_fmt yuv420p -r 30 -movflags +faststart -an docs/demo/icl-gg-demo.mp4
+```
+
+The script drives the real pages with a visible cursor and caption overlays;
+set `ICL_BASE` / `CHROMIUM_PATH` env vars to point at another server or browser.
+
 ## Notes for the PHP/WordPress lift
 
 - Components are self-contained: copy a card's markup + its CSS block; class names are
